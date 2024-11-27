@@ -1,21 +1,36 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+
+    readInput("Day01_test_1").run { println(part1() == 142) }
+    readInput("Day01_test_2").run { println(part2() == 281) }
+    readInput("Day01").run {
+        part1().println()
+        part2().println()
     }
+}
 
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
+private fun List<String>.part1() = sumOf {
+    val first = it.find { char -> char.isDigit() }
+    val last = it.findLast { char -> char.isDigit() }
+    "$first$last".toInt()
+}
 
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
+private val numbers = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+private fun String.textToInt() = when (this) {
+    "one" -> 1
+    "two" -> 2
+    "three" -> 3
+    "four" -> 4
+    "five" -> 5
+    "six" -> 6
+    "seven" -> 7
+    "eight" -> 8
+    "nine" -> 9
+    else -> toInt()
+}
 
-    // Read the input from the `src/Day01.txt` file.
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+private fun List<String>.part2() = sumOf {
+    val first = it.findAnyOf(numbers)?.second?.textToInt()
+    val last = it.findLastAnyOf(numbers)?.second?.textToInt()
+    "$first$last".toInt()
 }
